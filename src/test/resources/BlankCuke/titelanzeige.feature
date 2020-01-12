@@ -3,7 +3,7 @@
 Funktionalität: Titelanzeige
   Um sich orientieren zu können müssen die Nutzer den richtigen Titel sehen
 
-  Szenariogrundriss:
+  Szenariogrundriss: Korrekte Titel
     Angenommen die Seite "<site>" wurde geöffnet
     Wenn ich auf das Element "<id>" klicke
     Dann sollte der Titel der Seite "<title>" lauten

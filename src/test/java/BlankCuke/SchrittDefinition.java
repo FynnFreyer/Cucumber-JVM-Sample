@@ -1,6 +1,7 @@
 package BlankCuke;
 
 import io.cucumber.java.After;
+import io.cucumber.java.de.Dann;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -31,8 +32,17 @@ public class SchrittDefinition {
         assertEquals(erwarteterTitel, wirklicherTitel);
     }
 
+    @Dann("sollte das Ergebnis {int} sein")
+    public void sollteDasErgebnisSein(int ergebnis) {
+        String erwartet = Integer.toString(ergebnis);
+        String gelesen = driver.findElement(By.id("result")).getText();
+        assertEquals(erwartet, gelesen);
+    }
+
+
     @After()
     public void tearDown() {
         driver.quit();
     }
+
 }
