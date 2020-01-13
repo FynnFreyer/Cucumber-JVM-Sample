@@ -1,3 +1,5 @@
+# [Cucumber JVM](https://cucumber.io/docs/cucumber/)
+
 ## Installation
 füge folgendes in die `pom.xml` ein:
 
@@ -26,6 +28,8 @@ Für JUnit 5 Support muss außerdem die JUnit Vintage Engine eingebunden werden:
 
 Die `${foo.bar}` Parts setzen natürlich gesetzte Properties voraus, ansonsten händisch durch gewünschte Versionen ersetzen.
 
+## Nutzung
+
 Definiere eine leere Klasse, in `src.test.java.${Projektname}` die den Cucumber JUnit runner nutzt:
 
     package com.example;
@@ -39,9 +43,6 @@ Definiere eine leere Klasse, in `src.test.java.${Projektname}` die den Cucumber 
     public class RunCucumberTest {
     }
 
-Formatierung und andere Optionen via `@CucumberOptions()`
-
-z.B. `@CucumberOptions(plugin = {"pretty"})`
 
 Die Funktionalität "Foo" wird in einem `foo.feature` File in `src.test.resources.${Projektname}` festgelegt, das ist der Part der von den Stakeholdern geschrieben wird.
 
@@ -95,20 +96,29 @@ bzw. die Schrittdefinition:
 
 Assertions von JUnit können einfach genutzt werden, Annotationen funktionieren etwas [anders](https://cucumber.io/docs/cucumber/api/#hooks), aber ziemlich ähnlich.
 
+## Reporting
 
-## Voraussetzungen
+Formatierung und andere Optionen können via `@CucumberOptions()` in der Runnerklasse eingestellt werden.
 
-- für Webautomation
-    - Der Geckodriver muss über die PATH-Variable auffindbar sein.
-    - `selenium-java` muss z.B. als Maven dependency verfügbar gemacht werden:
-            
-            <dependency>
-                <groupId>org.seleniumhq.selenium</groupId>
-                <artifactId>selenium-java</artifactId>
-                <version>3.141.59</version>
-            </dependency>
+z.B. generiert `@CucumberOptions(plugin = {"pretty"})` schön eingefärbten Konsolenoutput
+
+für HTML-Reports fügen wir `html:target/cucumber-reports` als Pluginoption hinzu
+(legt die Reports unter `./target/cucumber-reports` ab) und
+analog dazu für JSON `json:target/cucumber-reports/Cucumber.json`
+
+XML kann mittels `junit:target/cucumber-reports/Cucumber.xml` generiert werden.
+
+Für Eclipse interessant ist die `monochrome` Option, da das einfärben des Outputs in Eclipse häßliche Sonderzeichen produzieren kann.
+
+Am Ende könnte es z.B. so aussehen:
+
+    @CucumberOptions(
+        plugin = {
+            "pretty", 
+            "html:target/cucumber-reports", 
+            "json:target/cucumber-reports/Cucumber.json", 
+            "junit:target/cucumber-reports/Cucumber.xml"}, 
+        monochrome = true
+    )
 
 
-
-
-[Serenity anbindung](http://thucydides.info/docs/articles/an-introduction-to-serenity-bdd-with-cucumber.html)
